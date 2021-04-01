@@ -171,7 +171,7 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 			for _, e := range v.Restriction.Enum {
 				sb.WriteString(fieldName)
 				sb.WriteString("_")
-				sb.WriteString(e)
+				sb.WriteString(adjustLiteral(e))
 				sb.WriteString(" ")
 				sb.WriteString(fieldName)
 				sb.WriteString(" = \"")
@@ -185,6 +185,12 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 		gen.Field += fmt.Sprintf("%s%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), genFieldConstraints(&v.Restriction), fieldName, gen.StructAST[v.Name])
 	}
 	return
+}
+
+var re = strings.NewReplacer("-", "减", "+", "加", " ", "_", ",", "_", ";", "_", "<", "小于", ">", "大于", "=", "等于", "&", "与", "|", "或")
+
+func adjustLiteral(s string) string {
+	return re.Replace(s)
 }
 
 func genFieldConstraints(r *Restriction) string {
