@@ -162,11 +162,47 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 	}
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		content := fmt.Sprintf(" %s\n", genGoFieldType(getBasefromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree)))
-		gen.StructAST[v.Name] = content
 		fieldName := genGoFieldName(v.Name)
-		gen.Field += fmt.Sprintf("%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), fieldName, gen.StructAST[v.Name])
+		if len(v.Restriction.Enum) > 0 {
+			var sb strings.Builder
+			sb.WriteString(content)
+			// define enumerable constants
+			sb.WriteString("\nconst(\n")
+			for _, e := range v.Restriction.Enum {
+				sb.WriteString(fieldName)
+				sb.WriteString("_")
+				sb.WriteString(e)
+				sb.WriteString(" ")
+				sb.WriteString(fieldName)
+				sb.WriteString(" = \"")
+				sb.WriteString(e)
+				sb.WriteString("\"\n")
+			}
+			sb.WriteString(")\n")
+			content = sb.String()
+		}
+		gen.StructAST[v.Name] = content
+		gen.Field += fmt.Sprintf("%s%stype %s%s", genFieldComment(fieldName, v.Doc, "//"), genFieldConstraints(&v.Restriction), fieldName, gen.StructAST[v.Name])
 	}
 	return
+}
+
+func genFieldConstraints(r *Restriction) string {
+	var sb strings.Builder
+	if r.Min != 0 || r.Max != 0 {
+		sb.WriteString(fmt.Sprintf(" Range: [%f-%f]", r.Min, r.Max))
+	}
+	if r.MinLength != 0 || r.MaxLength != 0 {
+		sb.WriteString(fmt.Sprintf(" Length: [%d-%d]", r.MinLength, r.MaxLength))
+	}
+	if r.Pattern != nil {
+		sb.WriteString(" Pattern: ")
+		sb.WriteString(r.Pattern.String())
+	}
+	if sb.Len() == 0 {
+		return ""
+	}
+	return "//" + sb.String() + "\n"
 }
 
 // GoComplexType generates code for complex type XML schema in Go language
