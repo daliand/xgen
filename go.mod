@@ -1,4 +1,4 @@
-module github.com/geoko86/xgen
+module github.com/aerobob1/xgen
 
 go 1.14
 
