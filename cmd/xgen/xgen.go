@@ -29,7 +29,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/draco1023/xgen"
+	"github.com/daliand/xgen"
 )
 
 // Config holds user-defined overrides and filters that are used when
