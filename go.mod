@@ -1,4 +1,4 @@
-module github.com/xuri/xgen
+module github.com/draco1023/xgen
 
 go 1.14
 
