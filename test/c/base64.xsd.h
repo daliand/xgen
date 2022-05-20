@@ -6,11 +6,13 @@ typedef char MyType1[];
 // MyType2 ...
 typedef struct {
 	int LengthAttr; // attr, optional
+	char Value[];
 } MyType2;
 
 // MyType3 ...
 typedef struct {
 	int LengthAttr; // attr, optional
+	char Value;
 } MyType3;
 
 // MyType4 ...
@@ -23,22 +25,15 @@ typedef struct {
 // MyType5 ...
 typedef char MyType5;
 
-// MyType6 ...
 typedef struct {
-	char CodeAttr; // attr, optional
-	int IdentifierAttr; // attr, optional
+	char Value;
 } MyType6;
 
-// MyType7 ...
 typedef struct {
-	char OriginAttr; // attr
-} MyType7;
-
-// TopLevel ...
-typedef struct {
-	float CostAttr; // attr, optional
-	char LastUpdatedAttr; // attr, optional
-	MyType7 Nested;
 	char MyType1[];
-	MyType2 MyType2[];
+	MyType2 MyType2;
+	MyType3 MyType3;
+	MyType4 MyType4;
+	char MyType5;
+	MyType6 MyType6;
 } TopLevel;

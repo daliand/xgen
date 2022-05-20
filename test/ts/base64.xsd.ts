@@ -6,7 +6,7 @@ export type MyType1 = Uint8Array;
 // MyType2 ...
 export class MyType2 {
 	LengthAttr: number | null;
-	Value: Uint8Array;
+	Value: Array<any>;
 }
 
 // MyType3 ...
@@ -25,23 +25,16 @@ export class MyType4 {
 // MyType5 ...
 export type MyType5 = string;
 
-// MyType6 ...
 export class MyType6 {
-	CodeAttr: string | null;
-	IdentifierAttr: number | null;
-}
-
-// MyType7 ...
-export class MyType7 {
-	OriginAttr: string;
 	Value: string;
 }
 
-// TopLevel ...
-export class TopLevel extends MyType6  {
-	CostAttr: number | null;
-	LastUpdatedAttr: string | null;
-	Nested: MyType7;
-	MyType1: Uint8Array;
+export class TopLevel {
+	MyType1: Array<Array<any>>;
 	MyType2: Array<MyType2>;
+	MyType3: Array<MyType3>;
+	MyType4: Array<MyType4>;
+	MyType5: Array<string>;
+	MyType6: Array<MyType6>;
+
 }

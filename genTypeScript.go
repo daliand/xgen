@@ -162,8 +162,8 @@ func (gen *CodeGenerator) TypeScriptComplexType(v *ComplexType) {
 			content += fmt.Sprintf("\t%s: %s;\n", genTypeScriptFieldName(element.Name), fieldType)
 		}
 
-		if len(v.Base) > 0 && isBuiltInTypeScriptType(v.Base) {
-			fieldType := genTypeScriptFieldType(getBasefromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree), false)
+		if len(v.Base) > 0 {
+			fieldType := genTypeScriptFieldType(getBasefromSimpleType(trimNSPrefix(v.Base), gen.ProtoTree))
 			content += fmt.Sprintf("\tValue: %s;\n", fieldType)
 		}
 		content += "}\n"
