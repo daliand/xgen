@@ -29,6 +29,7 @@ type Options struct {
 	Extract             bool
 	Lang                string
 	Package             string
+	IgnoreNameConflict  bool
 	IncludeMap          map[string]bool
 	LocalNameNSMap      map[string]string
 	NSSchemaLocationMap map[string]string
@@ -138,11 +139,12 @@ func (opt *Options) Parse() (err error) {
 			os.Exit(1)
 		}
 		generator := &CodeGenerator{
-			Lang:      opt.Lang,
-			Package:   opt.Package,
-			File:      path,
-			ProtoTree: opt.ProtoTree,
-			StructAST: map[string]string{},
+			Lang:               opt.Lang,
+			Package:            opt.Package,
+			File:               path,
+			ProtoTree:          opt.ProtoTree,
+			IgnoreNameConflict: opt.IgnoreNameConflict,
+			StructAST:          map[string]string{},
 		}
 		funcName := fmt.Sprintf("Gen%s", MakeFirstUpperCase(opt.Lang))
 		if err = callFuncByName(generator, funcName, []reflect.Value{}); err != nil {
