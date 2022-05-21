@@ -13,6 +13,7 @@ import (
 	"go/format"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 )
 
@@ -190,10 +191,10 @@ func (gen *CodeGenerator) GoSimpleType(v *SimpleType) {
 	return
 }
 
-var re = strings.NewReplacer("-", "减", "+", "加", " ", "_", ",", "_", ";", "_", "<", "小于", ">", "大于", "=", "等于", "&", "与", "|", "或")
+var re = regexp.MustCompile(`[\W_]`)
 
 func adjustLiteral(s string) string {
-	return re.Replace(s)
+	return re.ReplaceAllString(s, "")
 }
 
 func genFieldConstraints(r *Restriction) string {
