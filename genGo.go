@@ -15,8 +15,6 @@ import (
 	"reflect"
 	"regexp"
 	"strings"
-
-	"github.com/sanity-io/litter"
 )
 
 // CodeGenerator holds code generator overrides and runtime data that are used
@@ -224,7 +222,7 @@ func genFieldConstraints(r *Restriction) string {
 // GoComplexType generates code for complex type XML schema in Go language
 // syntax.
 func (gen *CodeGenerator) GoComplexType(v *ComplexType) {
-	litter.Dump(v)
+	//litter.Dump(v)
 	if _, ok := gen.StructAST[v.Name]; !ok {
 		content := " struct {\n"
 		fieldName := genGoFieldName(v.Name)
